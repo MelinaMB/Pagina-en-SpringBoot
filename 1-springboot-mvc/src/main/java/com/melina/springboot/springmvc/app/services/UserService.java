@@ -8,7 +8,7 @@ import java.util.Optional;
 public interface UserService {
 
     List<User> findAll();
-    Optional<User> findById();
+    Optional<User> findById(long id);
     User save(User user);// guarda un objeto y devuelve el objeto guardado
     void remove(Long id);
 }
