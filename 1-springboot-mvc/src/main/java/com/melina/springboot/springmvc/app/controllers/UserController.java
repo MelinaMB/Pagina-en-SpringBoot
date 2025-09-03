@@ -35,7 +35,7 @@ public class UserController {
     }
 
     //implementar el listado de usuarios
-    @GetMapping("/")
+    @GetMapping
     public String list(Model model){
         model.addAttribute("title", "Listado de usuarios");
         model.addAttribute("users",service.findAll());

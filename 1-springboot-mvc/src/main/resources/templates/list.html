@@ -21,6 +21,19 @@
 
         </tr>
         </thead>
+        <tbody>
+        //va users porque en el controlador lo tengo como users
+        <tr th:each = "user : ${users}">// es each de thymeleaf es como un for each que te permite iterar en este caso por cada usuario
+            <td th:text = "${users.id}"></td>
+            <td th:text = "${users.name}"></td>
+            <td th:text = "${users.lastname}"></td>
+            <td th:text = "${users.email}"></td>
+            <td th:text = "${users.createdAt}"></td>
+            <td><a th:href="@{/form/} + ${user.id}">edit</a></td>
+            <td><a th:href="@{/delete/} + ${user.id}"
+                   onclick = " return confirm( ' esta seguro que desea eliminar?')">delete</a></td>
+        </tr>
+        </tbody>
     </table>
 </div>
 
