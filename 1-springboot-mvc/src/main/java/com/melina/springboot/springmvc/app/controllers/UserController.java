@@ -5,16 +5,15 @@ import com.melina.springboot.springmvc.app.repositoriesDAO.UserRepository;
 import com.melina.springboot.springmvc.app.services.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Optional;
 
 @Controller
 @RequestMapping("/users")
+@SessionAttributes({"user"})//tengo que poner que objeto quiero persistir entre las sesiones, se va a persistir hasta el post
 
 public class UserController {
 
@@ -66,7 +65,7 @@ public class UserController {
     }
 
     @PostMapping
-    public String form(User user, Model model, RedirectAttributes redirect) {
+    public String form(User user, Model model, RedirectAttributes redirect, SessionStatus status) {
         String message = (user.getId() != null && user.getId() > 0)? "Usuario " +
                 user.getName()  +
                 "se ha actualizado exitosamente" : "Usuario " +
@@ -74,6 +73,8 @@ public class UserController {
                 "se ha creado exitosamente";
 
         service.save(user);
+        //despues de guardar de persistir  borramos el objeto user de la session, limpiamos la session
+        status.setComplete();// se completa el proceso del request que dura un solo request desde que se llena los datos en el formulario y despues se envian
         redirect.addFlashAttribute("success", message);
         return "redirect:/users"; //se redirige a la lista de usuarios para ver los cambios
     }
