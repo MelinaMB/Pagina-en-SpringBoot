@@ -67,7 +67,7 @@ public class UserController {
 
     @PostMapping
     public String form(User user, Model model, RedirectAttributes redirect) {
-        String message = (user.getId() > 0)? "Usuario " +
+        String message = (user.getId() != null && user.getId() > 0)? "Usuario " +
                 user.getName()  +
                 "se ha actualizado exitosamente" : "Usuario " +
                 user.getName() +

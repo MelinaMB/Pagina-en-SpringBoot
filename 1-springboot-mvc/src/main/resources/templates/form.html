@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" lang="en">
+<html  xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title th:text="${title}">Title</title>
@@ -7,10 +7,12 @@
 <body>
 
     <div>
+        <p th:text="'ID del usuario: ' + ${user.id}"></p>
         <h4 th:text="${title}"></h4>
         <a th:href="@{/users}" th:text="'volver'"></a>
         <form th:action="@{/users}" method = "post" th:object="${user}">
             <input type = "hidden" th:field = "*{id}">
+            <input type = "hidden" th:field = "*{createdAt}">
 
             <div>
                 <label for="name">Nombre</label>
@@ -43,7 +45,7 @@
             <div>
                 <label for="password">Password</label>
                 <div>
-                    <input type="text" th:field="*{password}" id="password">
+                    <input type="password" th:field="*{password}" id="password">
                 </div>
             </div>
 
