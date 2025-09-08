@@ -3,8 +3,10 @@ package com.melina.springboot.springmvc.app.controllers;
 import com.melina.springboot.springmvc.app.entitiesmodels.User;
 import com.melina.springboot.springmvc.app.repositoriesDAO.UserRepository;
 import com.melina.springboot.springmvc.app.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -65,7 +67,12 @@ public class UserController {
     }
 
     @PostMapping
-    public String form(User user, Model model, RedirectAttributes redirect, SessionStatus status) {
+    public String form(@Valid User user, BindingResult result, Model model, RedirectAttributes redirect, SessionStatus status) {
+
+        if(result.hasErrors()){ //cuando hay un error me devuelve el formulario para corregirlo
+            model.addAttribute("title", "Validando Formulario");
+            return "form";      // no se van a perder los datos del usuario porque todavia estan en la session
+        }
         String message = (user.getId() != null && user.getId() > 0)? "Usuario " +
                 user.getName()  +
                 "se ha actualizado exitosamente" : "Usuario " +
